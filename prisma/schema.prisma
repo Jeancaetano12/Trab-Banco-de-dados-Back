@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output = "../src/generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+
+}
+
+enum Status {
+  Em_Planejamento
+  Em_Andamento
+  Concluido
+}
+
+model funcionarios {
+  id    Int @id @default(autoincrement())
+  nome  String
+  cargo String
+  email String  @unique
+  data_contratacao  DateTime
+  salario Decimal @db.Decimal(10, 2)
+
+  alocacoes alocacoes[]
+
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+}
+
+model projetos {
+  id    Int @id @default(autoincrement())
+  nome  String
+  descricao   String
+  data_inicio  DateTime
+  data_previsao_termino DateTime
+
+  status Status   @default(Em_Planejamento)
+  alocacoes alocacoes[]
+  
+  createdAt   DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+}
+
+model alocacoes {
+  funcionario_id Int
+  projeto_id Int
+  data_alocacao DateTime
+  horas_trabalhadas Int?
+
+  funcionario funcionarios @relation(fields: [funcionario_id], references: [id])
+  projeto projetos @relation(fields: [projeto_id], references: [id])
+
+  @@id([funcionario_id,projeto_id])
+}
