@@ -19,6 +19,5 @@ export class CreateProjeto {
     @IsNotEmpty({message: 'O campo previsao de termino é obrigatorio'})
     @Type(() => Date)
     data_previsao_termino: Date; 
-    
 }
 

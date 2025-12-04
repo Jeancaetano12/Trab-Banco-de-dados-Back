@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsDecimal, IsString, IsEmail, IsDate } from "class-validator";
+import { IsNotEmpty, IsDecimal, IsString, IsEmail, IsDate, NotContains } from "class-validator";
 import { Type } from 'class-transformer' 
 
 
@@ -21,6 +21,7 @@ export class CreateFuncionario {
     data_contratacao: Date;
 
     @IsDecimal()
+    @NotContains('-', {message: 'O salario não pode ser negativo'})
     @IsNotEmpty({ message: 'O campo Salário é obrigatorio'})
     salario: string;
 }
