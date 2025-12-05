@@ -56,7 +56,7 @@ model alocacoes {
   horas_trabalhadas Int?
 
   funcionario funcionarios @relation(fields: [funcionario_id], references: [id], onDelete: Cascade)
-  projeto projetos @relation(fields: [projeto_id], references: [id])
+  projeto projetos @relation(fields: [projeto_id], references: [id], onDelete: Cascade)
 
   @@id([funcionario_id,projeto_id])
 }
